@@ -107,6 +107,18 @@ nav ul li a:hover, a.active{
     padding: 2px;
     margin: 10px 10px 0px 0px;
     word-spacing: 20px;
+    text-shadow: 1px 1px gray;
+    display: inline;
+    user-select: none;
+}
+.btn-hover:hover{
+    color: #273475;
+    cursor: pointer;
+}
+.btn-hover:active{
+    color: #273475;
+    text-shadow: 0px 0px gray;
+    transform: translateY(4px);
 }
 .btn-style{
     display: block;

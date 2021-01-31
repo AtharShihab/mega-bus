@@ -61,24 +61,23 @@
             </div>
             <div class="inputs">
                 <div class="input-group f-class">
-                <div>
-                    <label for="">First Class ($150)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <div>
+                        <label for="">First Class ($150)</label>
+                        <input id="firstClassTicket" value="0" class="inp-style inp-width" type="number" name="">
+                    </div>
+                    <div class="plus-minus-btn">
+                        <p><span class="btn-hover" id="increaseFirstClass">+</span><span class="btn-hover" id="decreaseFirstClass">-</span></p>
+                    </div>
                 </div>
-                <div class="plus-minus-btn">
-                    <p>+ -</p>
-                </div>
-            </div>
                 <div class="input-group f-class">
                     <div>
                         <label for="">Economy ($100)</label>
-                        <input class="inp-style inp-width" type="number" name="">
+                        <input id="economyTicket" value="0" class="inp-style inp-width" type="number" name="">
                     </div>
                     <div class="plus-minus-btn">
-                        <p> <span>+</span> <span>-</span> </p>
+                        <p><span class="btn-hover" id="increaseEconomy">+</span><span class="btn-hover" id="decreaseEconomy">-</span></p>
                     </div>
                 </div>
-
             </div>
             <div class="calculations">
                 <div class="amount">
@@ -86,7 +85,7 @@
                         <p>Subtotal</p>
                     </div>
                     <div class="right">
-                        <p>$500</p>
+                        <p>$<span id="subTotal">00</span></p>
                     </div>
                 </div>
 
@@ -95,7 +94,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$50</p>
+                        <p>$<span id="vat">00</span></p>
                     </div>
                 </div>
                 <hr>
@@ -104,7 +103,7 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$550</p>
+                        <p>$<span id="total">00</span></p>
                     </div>
                 </div>
             </div>
@@ -113,6 +112,90 @@
     </main>
 
     <!--Thank You-->
+    <script>
+        //First class ticket increases
+        const increaseFirstClass = document.getElementById("increaseFirstClass");
+        increaseFirstClass.addEventListener("click", function(){
+            const price = 150;
+            let firstClassTicket = getInputNumber("firstClassTicket", true);
+            let economyTicket = getInputNumber("economyTicket", true);
+            firstClassTicket++;
+            calculateTicketPrice(firstClassTicket, economyTicket);
+            document.getElementById("firstClassTicket").value = firstClassTicket;
+        });
+
+        //First class ticket decreases
+        const decreaseFirstClass = document.getElementById("decreaseFirstClass");
+        decreaseFirstClass.addEventListener("click", function(){
+            let firstClassTicket = getInputNumber("firstClassTicket", true);
+            let economyTicket = getInputNumber("economyTicket", true);
+            const price = 150;
+            if(firstClassTicket > 0){
+                firstClassTicket--;
+            }else{
+                firstClassTicket = 0;
+            }
+            calculateTicketPrice(firstClassTicket, economyTicket);
+            document.getElementById("firstClassTicket").value = firstClassTicket;
+        });
+
+        //Increments economy class ticket quantity
+        const increaseEconomy = document.getElementById("increaseEconomy");
+        increaseEconomy.addEventListener("click", function(){
+            const price = 100;
+            let economyTicket = getInputNumber("economyTicket", true);
+            let firstClassTicket = getInputNumber("firstClassTicket", true);
+            economyTicket++;
+            calculateTicketPrice(firstClassTicket, economyTicket);
+            document.getElementById("economyTicket").value = economyTicket;
+        });
+
+        //Decrements economy class ticket quantity
+        const decreaseEconomy = document.getElementById("decreaseEconomy");
+        decreaseEconomy.addEventListener("click", function(){
+            let economyTicket = getInputNumber("economyTicket", true);
+            let firstClassTicket = getInputNumber("firstClassTicket", true);
+            const price = 150;
+            if(economyTicket > 0){
+                economyTicket--;
+            }else{
+                economyTicket = 0;
+            }
+            calculateTicketPrice(firstClassTicket, economyTicket);
+            document.getElementById("economyTicket").value = economyTicket;
+        });
+
+        //Take a string from html elements and convert it to a number
+        function getInputNumber(id, isValue){
+            let amount = 0;
+            if(isValue){
+                amount = document.getElementById(id).value;
+            }else{
+                amount = document.getElementById(id).innerText
+            }
+            const amountNumber = parseFloat(amount);
+            return amountNumber;
+        }
+
+        //calculate ticket price
+        function calculateTicketPrice(firstClassTicket, economyTicket){
+            // let subTotalEconomy = 0;
+            // let subTotalFirstClass = 0;
+            // if(ticketPrice === 150){
+            //     subTotalFirstClass = ticketQuantity * ticketPrice;
+            // }else if(ticketPrice === 100){
+            //     subTotalEconomy = ticketPrice * ticketQuantity;
+            // }
+            const subTotalFirstClass = firstClassTicket * 150;
+            const subTotalEconomy = economyTicket * 100;
+            const subTotal = subTotalFirstClass + subTotalEconomy;
+            const vat = (10/100) * subTotal;
+            const total = subTotal + vat;
+            document.getElementById("subTotal").innerText = subTotal;
+            document.getElementById("vat").innerText = vat;
+            document.getElementById("total").innerText = total;
+        }
+    </script>
 </body>
 
 </html>
