@@ -126,9 +126,18 @@ nav ul li a:hover, a.active{
     padding: 10px;
     border-radius: 5px;
     border: none;
+    box-shadow: 2px 4px 5px gray;
     color: #fff;
     font-weight: 500;
     background-color:  #52AF3A;
+}
+.btn-style:hover{
+    background-color:  #377428;
+}
+.btn-style:active{
+    background-color:  #377428;
+    box-shadow: 2px 2px 5px gray;
+    transform: translateY(2px);
 }
 .amount{
     display: flex;
