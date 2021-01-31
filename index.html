@@ -113,81 +113,65 @@
 
     <!--Thank You-->
     <script>
-        //First class ticket increases
+        //increaseFirstClass button handler event
         const increaseFirstClass = document.getElementById("increaseFirstClass");
         increaseFirstClass.addEventListener("click", function(){
-            const price = 150;
-            let firstClassTicket = getInputNumber("firstClassTicket", true);
-            let economyTicket = getInputNumber("economyTicket", true);
-            firstClassTicket++;
-            calculateTicketPrice(firstClassTicket, economyTicket);
-            document.getElementById("firstClassTicket").value = firstClassTicket;
+            increamentTicketQuantity("firstClassTicket");
         });
 
-        //First class ticket decreases
+        //decreaseFirstClass button handler event
         const decreaseFirstClass = document.getElementById("decreaseFirstClass");
         decreaseFirstClass.addEventListener("click", function(){
-            let firstClassTicket = getInputNumber("firstClassTicket", true);
-            let economyTicket = getInputNumber("economyTicket", true);
-            const price = 150;
-            if(firstClassTicket > 0){
-                firstClassTicket--;
-            }else{
-                firstClassTicket = 0;
-            }
-            calculateTicketPrice(firstClassTicket, economyTicket);
-            document.getElementById("firstClassTicket").value = firstClassTicket;
+            decreamentTicketQuantity("firstClassTicket");
         });
 
-        //Increments economy class ticket quantity
+        //increaseEconomy button handler event
         const increaseEconomy = document.getElementById("increaseEconomy");
         increaseEconomy.addEventListener("click", function(){
-            const price = 100;
-            let economyTicket = getInputNumber("economyTicket", true);
-            let firstClassTicket = getInputNumber("firstClassTicket", true);
-            economyTicket++;
-            calculateTicketPrice(firstClassTicket, economyTicket);
-            document.getElementById("economyTicket").value = economyTicket;
+            increamentTicketQuantity("economyTicket");
         });
 
-        //Decrements economy class ticket quantity
+        //decreaseEconomy button handler event
         const decreaseEconomy = document.getElementById("decreaseEconomy");
         decreaseEconomy.addEventListener("click", function(){
-            let economyTicket = getInputNumber("economyTicket", true);
-            let firstClassTicket = getInputNumber("firstClassTicket", true);
-            const price = 150;
-            if(economyTicket > 0){
-                economyTicket--;
-            }else{
-                economyTicket = 0;
-            }
-            calculateTicketPrice(firstClassTicket, economyTicket);
-            document.getElementById("economyTicket").value = economyTicket;
+            decreamentTicketQuantity("economyTicket");
         });
 
-        //Take a string from html elements and convert it to a number
-        function getInputNumber(id, isValue){
-            let amount = 0;
-            if(isValue){
-                amount = document.getElementById(id).value;
+        //increament ticket quantity when called
+        function increamentTicketQuantity(id){
+            let ticketQuantity = getInputNumber(id);
+            ticketQuantity++;
+            document.getElementById(id).value = ticketQuantity;
+            calculateTicketPrice();
+        }
+
+        //decreament ticket quantity when called
+        function decreamentTicketQuantity(id){
+            let ticketQuantity = getInputNumber(id);
+            if(ticketQuantity > 0){
+                ticketQuantity--;
             }else{
-                amount = document.getElementById(id).innerText
+                ticketQuantity = 0;
             }
+            document.getElementById(id).value = ticketQuantity;
+            calculateTicketPrice();
+        }
+
+        //Take a string from html elements and convert it to a number
+        function getInputNumber(id){
+            const amount = document.getElementById(id).value;;
             const amountNumber = parseFloat(amount);
             return amountNumber;
         }
 
         //calculate ticket price
-        function calculateTicketPrice(firstClassTicket, economyTicket){
-            // let subTotalEconomy = 0;
-            // let subTotalFirstClass = 0;
-            // if(ticketPrice === 150){
-            //     subTotalFirstClass = ticketQuantity * ticketPrice;
-            // }else if(ticketPrice === 100){
-            //     subTotalEconomy = ticketPrice * ticketQuantity;
-            // }
+        function calculateTicketPrice(){
+            let firstClassTicket = getInputNumber("firstClassTicket");
+            let economyTicket = getInputNumber("economyTicket");
+
             const subTotalFirstClass = firstClassTicket * 150;
             const subTotalEconomy = economyTicket * 100;
+
             const subTotal = subTotalFirstClass + subTotalEconomy;
             const vat = (10/100) * subTotal;
             const total = subTotal + vat;
